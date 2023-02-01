@@ -121,18 +121,25 @@ class ManualPaymentController extends Controller
 
     public function updateStatus(Request $request)
     {
-        $payment = ManualPayment::findOrFail($request->reference);
-        $payment->status_code = $request->status_code;
-        $payment->comment = $request->comment;
-        $payment->update();
-        if ($payment->status_code = 2) {
+        if ($request->status_code == 2) {
+            $payment = ManualPayment::findOrFail($request->reference);
+            $payment->status_code = $request->status_code;
+            $payment->comment = $request->comment;
+            $payment->update();
             Mail::to($payment->payer->email)->send(new PaymentSuccessMail($payment));
+            return response()->json([
+                'message' => 'Berhasil merubah status pembayaran'
+            ]);
         }
-        if ($payment->status_code = 3) {
+        if ($request->status_code == 3) {
+            $payment = ManualPayment::findOrFail($request->reference);
+            $payment->status_code = $request->status_code;
+            $payment->comment = $request->comment;
+            $payment->update();
             Mail::to($payment->payer->email)->send(new PaymentRejectedMail($payment));
+            return response()->json([
+                'message' => 'Berhasil merubah status pembayaran'
+            ]);
         }
-        return response()->json([
-            'message' => 'Berhasil merubah status pembayaran'
-        ]);
     }
 }

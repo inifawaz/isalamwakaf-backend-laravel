@@ -25,9 +25,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             ArticleCategorySeeder::class,
-            ArticleSeeder::class,
+            // ArticleSeeder::class,
             CampaignCategorySeeder::class,
-            CampaignSeeder::class
+            // CampaignSeeder::class
         ]);
     }
 }
